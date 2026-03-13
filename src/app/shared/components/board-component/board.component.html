@@ -1,0 +1,58 @@
+<div class="board" cdkDropListGroup>
+    <div class="column">
+      <div class="column-header">
+        <h2>To Do <span class="task-count">{{todo.length}}</span></h2>
+      </div>
+      
+      <div class="add-task-container">
+        <input [(ngModel)]="newTaskTitle" placeholder="+ Create issue" (keyup.enter)="addTask()">
+      </div>
+
+      <div class="task-list" id="todo" cdkDropList [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)">
+        <div class="task-card" *ngFor="let task of todo" cdkDrag>
+          <span class="task-text">{{ task.title }}</span>
+          <mat-icon class="delete-icon" (click)="deleteSingleTask(task, todo)">close</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="column-header">
+        <h2>In Progress <span class="task-count">{{inProgress.length}}</span></h2>
+      </div>
+      
+      <div class="task-list" id="inProgress" cdkDropList [cdkDropListData]="inProgress" (cdkDropListDropped)="drop($event)">
+        <div class="task-card" *ngFor="let task of inProgress" cdkDrag>
+          <span class="task-text">{{ task.title }}</span>
+          <mat-icon class="delete-icon" (click)="deleteSingleTask(task, inProgress)">close</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="column-header">
+        <h2>Needs Checking <span class="task-count">{{needsChecking.length}}</span></h2>
+      </div>
+      
+      <div class="task-list" id="needsChecking" cdkDropList [cdkDropListData]="needsChecking" (cdkDropListDropped)="drop($event)">
+        <div class="task-card" *ngFor="let task of needsChecking" cdkDrag>
+          <span class="task-text">{{ task.title }}</span>
+          <mat-icon class="delete-icon" (click)="deleteSingleTask(task, needsChecking)">close</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="column-header header-with-btn">
+        <h2>Done <span class="task-count">{{done.length}}</span></h2>
+        <button *ngIf="done.length > 0" class="clear-btn" (click)="clearDoneTasks()">Clear All</button>
+      </div>
+      
+      <div class="task-list" id="done" cdkDropList [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
+        <div class="task-card done-card" *ngFor="let task of done" cdkDrag>
+          <span class="task-text">{{ task.title }}</span>
+          <mat-icon class="delete-icon" (click)="deleteSingleTask(task, done)">close</mat-icon>
+        </div>
+      </div>
+    </div>
+</div>

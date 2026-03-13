@@ -1,0 +1,27 @@
+<div class="wrapper">
+    <div class="header">
+        
+        <div class="user-profile">
+            <button class="user-dropdown-trigger" [matMenuTriggerFor]="userMenu">
+                <div class="user-info">
+                    <div class="avatar">{{ userInitials }}</div>
+                    <span class="user-name">{{ userName }}</span>
+                </div>
+                <mat-icon class="arrow-icon">keyboard_arrow_down</mat-icon>
+            </button>
+            
+            <mat-menu #userMenu="matMenu" backdropClass="dark-menu-backdrop" class="dark-custom-menu">
+                <button mat-menu-item class="menu-item" (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Log Out</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    
+    <div class="main">
+        <board></board>
+    </div>
+    <div class="footer">
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="wrapper">
+    <div class="header">
+        <div class="textfield">
+            <span>Log In page</span>
+        </div>
+    </div>
+    <div class="main">
+        <div class="auth-container">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <inputfield 
+                [control]="loginForm.controls.email" 
+                placeholder="Email"
+                type="email">
+                </inputfield>
+                <inputfield 
+                [control]="loginForm.controls.password" 
+                placeholder="Password"
+                type="password">
+                </inputfield>
+                <section class="section">
+                    <mat-checkbox class="example-margin" formControlName="rememberMe">Remember me</mat-checkbox>
+                    <p class="link forgotpassword-link" routerLink="/forgotpassword">I forgot my password</p>
+                </section>
+                <custom-button 
+                text="Log in" 
+                type="submit" 
+                btnClass="btn" 
+                [isDisabled]="loginForm.invalid">
+                </custom-button>
+                <p class="link signup-link" routerLink="/signup">Sign up to your account</p>
+            </form>
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>

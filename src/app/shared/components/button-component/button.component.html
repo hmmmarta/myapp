@@ -1,0 +1,8 @@
+<button
+mat-raised-button 
+[type]="type" 
+[ngClass]="btnClass"
+[disabled]="isDisabled"
+(click)="onClick.emit()">
+{{ text }}
+</button>

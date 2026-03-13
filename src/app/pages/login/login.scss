@@ -1,0 +1,26 @@
+.section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+:host ::ng-deep {
+  .mat-mdc-checkbox {
+    .mdc-checkbox__background {
+      border-radius: 6px;
+      border-color: var(--text-white);
+    }
+
+    &.mat-mdc-checkbox-checked {
+      .mdc-checkbox__background {
+        background-color: var(--text-white) !important;
+        border-color: var(--text-white);
+      }
+
+      .mdc-checkbox__checkmark-path {
+        stroke: #808080;
+        stroke-width: 2.5px;
+      }
+    }
+  }
+}

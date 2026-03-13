@@ -1,0 +1,89 @@
+.user-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 220px;
+  gap: 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 6px 12px 6px 6px;
+  color: var(--text-white);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--border-dark);
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary-color); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .user-name {
+    font-size: 15px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .arrow-icon {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    flex-shrink: 0;
+  }
+}
+
+::ng-deep .dark-custom-menu {
+  background-color: var(--bg-dark) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-top: 8px;
+  width: 220px;
+
+  .mat-mdc-menu-content {
+    padding: 0;
+  }
+
+  .menu-item {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    min-height: 56px;
+    transition: all 0.2s;
+
+    mat-icon {
+      color: var(--text-white);
+      margin-right: 16px;
+    }
+
+    &:hover {
+      background-color: var(--border-dark);
+      color: var(--primary-color);
+      
+      mat-icon {
+        color: var(--primary-color);
+      }
+    }
+  }
+}

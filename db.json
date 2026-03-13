@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "id": "011a",
+      "name": "marta",
+      "email": "marta@gmail.com",
+      "password": "qwertyu"
+    },
+    {
+      "id": "00ca",
+      "name": "Marta Hryshechko",
+      "email": "martahr@gmail.com",
+      "password": "qwerty"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "7f00",
+      "title": "checking",
+      "status": "needsChecking",
+      "userId": "011a"
+    },
+    {
+      "id": "dec3",
+      "title": "to do",
+      "status": "todo",
+      "userId": "00ca"
+    },
+    {
+      "id": "4bec",
+      "title": "done",
+      "status": "done",
+      "userId": "00ca"
+    },
+    {
+      "id": "7125",
+      "title": "needs checking",
+      "status": "needsChecking",
+      "userId": "00ca"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

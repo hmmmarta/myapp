@@ -1,1 +1,73 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+:root {
+  --primary-color: #707eff;
+  --bg-dark: #000000;
+  --bg-light: #121212;
+  --border-light: rgba(228, 228, 228, 0.6);
+  --text-white: #ffffff;
+  --placeholder-color: rgba(228, 228, 228, 0.6);
+  --radius: 5px;
+  --placeholder-font-weight: 400;
+  --border-dark: rgba(255, 255, 255, 0.05);
+}
+
+html {
+  height: 100%;
+  @include mat.theme((
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  color-scheme: dark;
+
+  background-color: var(--bg-dark); 
+  color: var(--text-white);
+  font: var(--mat-sys-body-medium);
+
+  margin: 0;
+  height: 100%;
+}
+.wrapper{
+    display: grid;
+    grid-template-rows: 1fr 7fr 1fr;
+    width: 100%;
+    background-color: var(--bg-dark);
+    height: 100vh;
+}
+.header{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 10px 32px;
+    background-color: var(--bg-light);
+    box-shadow: 0 4px 12px var(--border-dark);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.auth-container{
+    width: 325px;
+}
+.footer{
+  min-height: 30px;
+  background-color: var(--bg-light);
+  box-shadow: 0 4px 12px var(--border-dark);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  bottom: 0;
+}
+.link{
+    font-size: 11px;
+    color: var(--primary-color);
+    cursor: pointer;
+}

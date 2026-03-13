@@ -1,0 +1,41 @@
+<div class="wrapper">
+    <div class="header">
+        <div class="textfield">
+            <span>SignUp page</span>
+        </div>
+    </div>
+    <div class="main">
+        <div class="auth-container">
+            <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+                <inputfield 
+                [control]="registrationForm.controls.name" 
+                placeholder="Name"
+                type="text">
+                </inputfield>
+                <inputfield 
+                [control]="registrationForm.controls.email" 
+                placeholder="Email"
+                type="email">
+                </inputfield>
+                <inputfield 
+                [control]="registrationForm.controls.password" 
+                placeholder="Password"
+                type="password">
+                </inputfield>
+                <inputfield 
+                [control]="registrationForm.controls.confirmPassword" 
+                placeholder="Confirm Password"
+                type="password">
+                </inputfield>
+                <custom-button 
+                text="Sign up" 
+                type="submit" 
+                btnClass="btn" 
+                [isDisabled]="registrationForm.invalid">
+                </custom-button>
+                <p class="link" routerLink="/login">Already have an account</p>
+            </form>
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>
