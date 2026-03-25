@@ -1,49 +1,68 @@
-import { Component } from "@angular/core";
-import { CustomInputComponent } from "../../shared/components/input-component/input.component";
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from "@angular/forms";
+import { Component, signal, inject, computed } from "@angular/core";
+import { form, required, email, minLength } from '@angular/forms/signals'; 
 import { Router, RouterLink } from "@angular/router";
 import { AuthService, User } from "../../core/services/auth.service";
+import { CustomInputComponent } from "../../shared/components/input-component/input.component";
 import { CustomButtonComponent } from "../../shared/components/button-component/button.component";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
   selector: 'signup',
+  standalone: true,
   templateUrl: './signup.html',
   styleUrls: ['./signup.scss'],
   imports: [
-    ReactiveFormsModule,
     CustomInputComponent,
     RouterLink,
-    CustomButtonComponent
+    CustomButtonComponent,
+    MatFormFieldModule
   ]
 })
 export class SignUpComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  registrationForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    confirmPassword: new FormControl('', [Validators.required])
-  }, { 
-    validators: this.passwordMatchValidator 
+  formSubmitted = signal(false);
+
+  registrationModel = signal({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
   });
 
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
+  passwordsMatch = computed(() => {
+    const model = this.registrationModel();
+    return model.password === model.confirmPassword;
+  });
 
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    }
-    return null;
-  }
+  registrationForm = form(this.registrationModel, (schema) => {
+    required(schema.name, { message: 'This field is required' });
+    minLength(schema.name, 2, { message: 'Too short (min 2 characters)' });
 
-  onSubmit() {
-    if (this.registrationForm.valid) {
-      const rawValues = this.registrationForm.getRawValue();
+    required(schema.email, { message: 'This field is required' });
+    email(schema.email, { message: 'Invalid email format' });
+
+    required(schema.password, { message: 'This field is required' });
+    minLength(schema.password, 6, { message: 'Too short (min 6 characters)' });
+
+    required(schema.confirmPassword, { message: 'This field is required' });
+  });
+
+  onSubmit(event: Event) {
+    event.preventDefault(); 
     
+    this.formSubmitted.set(true);
+
+    const isNameValid = this.registrationForm.name().valid();
+    const isEmailValid = this.registrationForm.email().valid();
+    const isPasswordValid = this.registrationForm.password().valid();
+    const isConfirmValid = this.registrationForm.confirmPassword().valid();
+
+    if (isNameValid && isEmailValid && isPasswordValid && isConfirmValid && this.passwordsMatch()) {
+      const rawValues = this.registrationModel();
       const { confirmPassword, ...userData } = rawValues;
+
       this.authService.signUp(userData as User).subscribe({
         next: () => {
           alert('Registration successful!');
@@ -51,8 +70,6 @@ export class SignUpComponent {
         },
         error: (err) => console.error('Sign up error', err)
       });
-    } else {
-      this.registrationForm.markAllAsTouched();
     }
   }
 }

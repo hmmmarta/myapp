@@ -1,13 +1,18 @@
-<mat-form-field appearance="outline" class="custom-field">
+<div class="custom-field-container" [class.error-state]="hasError">
+  
+  @if (label()) {
+    <label class="custom-label">{{ label() }}</label>
+  }
+  
   <input 
-    matInput 
-    [type]="type" 
-    [placeholder]="placeholder" 
-    [formControl]="control"
-    class="custom-input-element"
+    class="custom-input"
+    [formField]="field()" 
+    [type]="type()" 
+    [placeholder]="placeholder()"
   >
   
-  @if (control.invalid && control.touched) {
-    <mat-error>{{ errorMessage }}</mat-error>
+  @if (hasError) {
+    <span class="custom-error">{{ errorMessage }}</span>
   }
-</mat-form-field>
+
+</div>

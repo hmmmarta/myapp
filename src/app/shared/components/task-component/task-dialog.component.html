@@ -1,0 +1,31 @@
+<div class="dialog-wrapper">
+      <h2 mat-dialog-title class="dialog-title">Task Details</h2>
+      
+      <mat-dialog-content class="dialog-content">
+        <div class="field-group">
+          <label>Title</label>
+          <input [(ngModel)]="data.title" class="custom-input" placeholder="Task title">
+        </div>
+
+        <div class="field-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="data.description" rows="5" class="custom-input" placeholder="Add a more detailed description..."></textarea>
+        </div>
+
+        <div class="dates-row">
+          <div class="field-group">
+            <label>Start Date</label>
+            <input type="date" [(ngModel)]="data.startDate" class="custom-input">
+          </div>
+          <div class="field-group">
+            <label>Due Date</label>
+            <input type="date" [(ngModel)]="data.dueDate" class="custom-input">
+          </div>
+        </div>
+      </mat-dialog-content>
+
+      <mat-dialog-actions align="end" class="dialog-actions">
+        <button class="btn-cancel" (click)="cancel()">Cancel</button>
+        <button class="btn-save" (click)="save()">Save Changes</button>
+      </mat-dialog-actions>
+</div>

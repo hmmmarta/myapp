@@ -7,6 +7,9 @@ export interface Task {
   title: string;
   status: 'todo' | 'inProgress' | 'needsChecking' | 'done';
   userId: string;
+  description?: string;
+  startDate?: string;
+  dueDate?: string;
 }
 
 @Injectable({
@@ -26,7 +29,7 @@ export class TaskService {
   }
 
   updateTask(task: Task): Observable<Task> {
-    return this.http.patch<Task>(`${this.apiUrl}/${task.id}`, { status: task.status });
+    return this.http.patch<Task>(`${this.apiUrl}/${task.id}`, task);
   }
   
   deleteTask(taskId: string): Observable<any> {

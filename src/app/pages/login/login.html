@@ -6,26 +6,31 @@
     </div>
     <div class="main">
         <div class="auth-container">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <form (submit)="onSubmit($event)">
                 <inputfield 
-                [control]="loginForm.controls.email" 
+                [field]="loginForm.email"
+                [isSubmitted]="formSubmitted()"
                 placeholder="Email"
                 type="email">
                 </inputfield>
                 <inputfield 
-                [control]="loginForm.controls.password" 
+                [field]="loginForm.password"
+                [isSubmitted]="formSubmitted()"
                 placeholder="Password"
                 type="password">
                 </inputfield>
                 <section class="section">
-                    <mat-checkbox class="example-margin" formControlName="rememberMe">Remember me</mat-checkbox>
+                    <mat-checkbox 
+                    class="example-margin" 
+                    [checked]="loginModel().rememberMe"
+                    (change)="toggleRememberMe($event)">Remember me</mat-checkbox>
                     <p class="link forgotpassword-link" routerLink="/forgotpassword">I forgot my password</p>
                 </section>
                 <custom-button 
                 text="Log in" 
                 type="submit" 
                 btnClass="btn" 
-                [isDisabled]="loginForm.invalid">
+                [isDisabled]="!loginForm.email().valid() || !loginForm.password().valid()">
                 </custom-button>
                 <p class="link signup-link" routerLink="/signup">Sign up to your account</p>
             </form>

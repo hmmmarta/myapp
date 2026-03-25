@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, signal, inject, computed } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from "@angular/forms";
+import { form, required, email, minLength } from '@angular/forms/signals'; 
 import { CustomInputComponent } from "../../shared/components/input-component/input.component";
-import { MatButtonModule } from "@angular/material/button";
 import { AuthService } from "../../core/services/auth.service";
 import { CustomButtonComponent } from "../../shared/components/button-component/button.component";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
   selector: 'forgotpassword',
@@ -12,47 +12,50 @@ import { CustomButtonComponent } from "../../shared/components/button-component/
   templateUrl: './forgotpassword.html',
   styleUrls: ['./forgotpassword.scss'],
   imports: [
-    ReactiveFormsModule,
     CustomInputComponent,
-    MatButtonModule,
     CustomButtonComponent,
-    RouterLink
+    RouterLink,
+    MatFormFieldModule
   ]
 })
 export class ForgotPasswordComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  forgotpasswordForm = new FormGroup({
-    email: new FormControl('', {
-      validators: [Validators.required, Validators.email],
-      nonNullable: true
-    }),
-    password: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(6)],
-      nonNullable: true
-    }),
-    confirmPassword: new FormControl('', {
-      validators: [Validators.required],
-      nonNullable: true
-    })
-  }, {
-    validators: this.passwordMatchValidator
+  formSubmitted = signal(false);
+
+  forgotModel = signal({
+    email: '',
+    password: '',
+    confirmPassword: ''
   });
 
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
+  passwordsMatch = computed(() => {
+    const model = this.forgotModel();
+    return model.password === model.confirmPassword;
+  });
 
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    }
-    return null;
-  }
+  forgotForm = form(this.forgotModel, (schema) => {
+    required(schema.email, { message: 'This field is required' });
+    email(schema.email, { message: 'Invalid email format' });
 
-  onSubmit() {
-    if (this.forgotpasswordForm.valid) {
-      const { email, password } = this.forgotpasswordForm.getRawValue();
+    required(schema.password, { message: 'This field is required' });
+    minLength(schema.password, 6, { message: 'Too short (min 6 characters)' });
+
+    required(schema.confirmPassword, { message: 'This field is required' });
+  });
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    
+    this.formSubmitted.set(true);
+
+    const isEmailValid = this.forgotForm.email().valid();
+    const isPasswordValid = this.forgotForm.password().valid();
+    const isConfirmValid = this.forgotForm.confirmPassword().valid();
+
+    if (isEmailValid && isPasswordValid && isConfirmValid && this.passwordsMatch()) {
+      const { email, password } = this.forgotModel();
 
       this.authService.changePassword(email, password).subscribe({
         next: (updatedUser) => {
@@ -65,9 +68,6 @@ export class ForgotPasswordComponent {
           alert(err.message);
         }
       });
-      
-    } else {
-      this.forgotpasswordForm.markAllAsTouched();
     }
   }
 }

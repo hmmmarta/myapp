@@ -1,0 +1,48 @@
+<div class="calendar-layout">
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <mat-icon class="arrow" (click)="prevMonth()">chevron_left</mat-icon>
+      <span class="month-title">{{ viewDate() | date:'MMMM yyyy' }}</span>
+      <mat-icon class="arrow" (click)="nextMonth()">chevron_right</mat-icon>
+    </div>
+
+    <div class="weekdays">
+      <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span>
+      <span>THU</span><span>FRI</span><span>SAT</span>
+    </div>
+
+    <div class="days-grid">
+      @for (day of calendarDays(); track day.date.getTime()) {
+        <div class="day-cell" 
+             [class.out-of-month]="!day.isCurrentMonth"
+             [class.today]="day.isToday"
+             [class.selected]="selectedDate()?.getTime() === day.date.getTime()"
+             (click)="selectDay(day)">
+             
+          <span class="day-number">{{ day.dayNumber }}</span>
+          
+          @if (day.tasks.length > 0) {
+            <div class="task-dot" [class.all-done]="day.allDone"></div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="day-details">
+    <h3>Tasks for {{ selectedDate() | date:'dd MMM yyyy' }}</h3>
+    
+    @if (tasksForSelectedDate().length === 0) {
+      <p class="no-tasks">No tasks due on this date.</p>
+    } @else {
+      <div class="details-list">
+        @for (task of tasksForSelectedDate(); track task.id) {
+          <div class="task-item">
+            <span class="status-badge" [ngClass]="task.status">{{ task.status }}</span>
+            <span class="task-title">{{ task.title }}</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

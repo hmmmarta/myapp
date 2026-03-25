@@ -6,32 +6,39 @@
     </div>
     <div class="main">
         <div class="auth-container">
-            <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <form (submit)="onSubmit($event)">
                 <inputfield 
-                [control]="registrationForm.controls.name" 
+                [field]="registrationForm.name"
+                [isSubmitted]="formSubmitted()"
                 placeholder="Name"
                 type="text">
                 </inputfield>
                 <inputfield 
-                [control]="registrationForm.controls.email" 
+                [field]="registrationForm.email" 
+                [isSubmitted]="formSubmitted()"
                 placeholder="Email"
                 type="email">
                 </inputfield>
                 <inputfield 
-                [control]="registrationForm.controls.password" 
+                [field]="registrationForm.password"
+                [isSubmitted]="formSubmitted()"
                 placeholder="Password"
                 type="password">
                 </inputfield>
                 <inputfield 
-                [control]="registrationForm.controls.confirmPassword" 
+                [field]="registrationForm.confirmPassword" 
+                [isSubmitted]="formSubmitted()"
                 placeholder="Confirm Password"
                 type="password">
                 </inputfield>
+                @if (formSubmitted() && !passwordsMatch() && registrationModel().confirmPassword) {
+                    <mat-error class="custom-mismatch-error">Passwords do not match</mat-error>
+                }
                 <custom-button 
                 text="Sign up" 
                 type="submit" 
                 btnClass="btn" 
-                [isDisabled]="registrationForm.invalid">
+                [isDisabled]="!registrationForm.name().valid() || !registrationForm.email().valid() || !registrationForm.password().valid() || !registrationForm.confirmPassword().valid() || !passwordsMatch()">
                 </custom-button>
                 <p class="link" routerLink="/login">Already have an account</p>
             </form>

@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'custom-button',
@@ -10,13 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./button.component.scss'],
 })
 export class CustomButtonComponent {
-  @Input() text: string = 'Button'; 
+  text = input<string>('Button'); 
+  type = input<'button' | 'submit'>('button'); 
+  btnClass = input<string>('btn'); 
+  isDisabled = input<boolean>(false); 
   
-  @Input() type: 'button' | 'submit' = 'button'; 
-  
-  @Input() btnClass: string = 'btn'; 
-
-  @Input() isDisabled: boolean = false; 
-
-  @Output() onClick = new EventEmitter<void>();
+  onClick = output<void>();
 }

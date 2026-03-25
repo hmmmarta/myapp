@@ -15,28 +15,34 @@
   ],
   "tasks": [
     {
-      "id": "7f00",
-      "title": "checking",
-      "status": "needsChecking",
-      "userId": "011a"
-    },
-    {
-      "id": "dec3",
-      "title": "to do",
-      "status": "todo",
-      "userId": "00ca"
-    },
-    {
-      "id": "4bec",
+      "id": "ff8f",
       "title": "done",
       "status": "done",
-      "userId": "00ca"
+      "userId": "00ca",
+      "startDate": "2026-03-04",
+      "dueDate": "2026-03-18"
     },
     {
-      "id": "7125",
+      "id": "8f11",
       "title": "needs checking",
       "status": "needsChecking",
-      "userId": "00ca"
+      "userId": "00ca",
+      "dueDate": "2026-04-01",
+      "startDate": "2026-03-13"
+    },
+    {
+      "id": "3bcc",
+      "title": "to do",
+      "status": "todo",
+      "userId": "00ca",
+      "dueDate": "2026-04-10"
+    },
+    {
+      "title": "in progress 2",
+      "status": "inProgress",
+      "userId": "00ca",
+      "id": "kp1i8CbL8Uc",
+      "dueDate": "2026-03-27"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
